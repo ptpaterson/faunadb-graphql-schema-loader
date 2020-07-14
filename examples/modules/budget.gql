@@ -1,0 +1,8 @@
+type Budget {
+  name: String!
+  owner: User! @relation
+}
+
+extend type User {
+  budget: Budget! @relation
+}
