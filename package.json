@@ -1,7 +1,12 @@
 {
   "name": "faunadb-graphql-schema-loader",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Package to simplify uploading GraphQL Schema to FaunaDB",
+  "keywords": [
+    "faunadb",
+    "graphql",
+    "typescript"
+  ],
   "license": "MIT",
   "files": [
     "build/**/*"
@@ -35,7 +40,6 @@
   },
   "dependencies": {
     "@graphql-tools/schema": "^6.0.11",
-    "fp-ts": "^2.6.7",
     "got": "^11.5.0",
     "graphql": "^15.2.0"
   }
