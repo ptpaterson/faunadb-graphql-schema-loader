@@ -15,6 +15,7 @@ node_modules/
 # dotenv environment variables file
 .env
 .env.test
+.env.example
 
 # Optional eslint cache
 .eslintcache
