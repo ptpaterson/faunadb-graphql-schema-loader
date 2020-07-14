@@ -1,5 +1,7 @@
 # FaunaDB GraphQL Schema Loader
 
+[![npm version](https://badge.fury.io/js/faunadb-graphql-schema-loader.svg)](https://badge.fury.io/js/faunadb-graphql-schema-loader) [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://lbesson.mit-license.org/)
+
 A lib with some helper functions to make uploading a schema to FaunaDB easier.
 
 # Basic Usage
