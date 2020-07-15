@@ -31,15 +31,22 @@ export const makeSchema = (typeDefs: string[]): string => {
 
 export const importSchema = async (
   faunadbKey: string,
-  schema: string
+  schema: string,
+  mode: 'merge' | 'override' = 'merge'
 ): Promise<string> => {
   try {
-    const response = await got.post('https://graphql.fauna.com/import', {
-      body: schema,
-      headers: {
-        Authorization: `Bearer ${faunadbKey}`,
-      },
-    })
+    let params = ''
+    if (mode === 'override') params = '?mode=override'
+
+    const response = await got.post(
+      `https://graphql.fauna.com/import${params}`,
+      {
+        body: schema,
+        headers: {
+          Authorization: `Bearer ${faunadbKey}`,
+        },
+      }
+    )
 
     if (response.statusCode !== 200) {
       throw new Error(response.body)

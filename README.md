@@ -30,7 +30,11 @@ importSchema(secret, schema).then((res) => console.log(res))
 ## `importSchema`
 
 ```typescript
-importSchema = (faunadbKey: string, schema: string) => Promise<string>
+importSchema = (
+  faunadbKey: string,
+  schema: string,
+  mode: 'merge' | 'override' = 'merge'
+) => Promise<string>
 ```
 
 Takes a schema string and uploads that to the database with the provided Admin Key.
@@ -39,6 +43,7 @@ Takes a schema string and uploads that to the database with the provided Admin K
 
 - `faunadbKey` An Admin key for your database
 - `schema` An SDL schema string
+- `mode` Import mode. Defaults to `merge`.
 
 **Returns** a Promise for the `response.body` from the http request.
 
