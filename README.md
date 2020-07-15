@@ -4,6 +4,8 @@
 
 A lib with some helper functions to make uploading a schema to FaunaDB easier.
 
+It allows you to combine multiple SDL strings and use `extend type`.
+
 # Basic Usage
 
 ```javascript
@@ -79,7 +81,7 @@ Takes a list of relative file paths (**from current working directory**) and syn
 
 **Returns** An array of strings containing contents of the files indicated. Hopefully SDL schemas!
 
-See [modules example](/examples/modules/setup.js)
+See [files example](/examples/from-files/setup.js)
 
 # Using and Contributing
 
