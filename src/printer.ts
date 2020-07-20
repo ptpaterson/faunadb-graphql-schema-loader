@@ -1,9 +1,15 @@
 import {
   print,
+  isObjectType,
+  isInputObjectType,
+  isEnumType,
+  isScalarType,
   isSpecifiedScalarType,
   GraphQLSchema,
-  ObjectTypeDefinitionNode,
-  ObjectTypeExtensionNode,
+  GraphQLObjectType,
+  GraphQLScalarType,
+  GraphQLInputObjectType,
+  GraphQLEnumType,
 } from 'graphql'
 
 /* ***************************************************************************************
@@ -29,6 +35,86 @@ const block = (array: string[]): string =>
 
 /* **************************************************************************************/
 
+const printObjectTypeDefintion = (type: GraphQLObjectType): string => {
+  const name = type.name
+  const node = type.astNode
+  const nodeDirectives = node?.directives?.map((n) => print(n))
+  const nodeFields = node?.fields
+
+  const extNodes = type?.extensionASTNodes
+  const extNodesFields = extNodes?.map((n) => n.fields)
+
+  const allFields = [
+    nodeFields ? nodeFields.map((n) => print(n)) : [],
+    extNodesFields
+      ? extNodesFields.map((ns) => (ns ? ns.map((n) => print(n)) : []))
+      : [],
+  ].flat(2)
+
+  const typeDef = join(
+    [
+      'type',
+      name,
+      // wrap('implements ', join(interfaces, ' & ')), // FaunaDB does not use Interfaces
+      join(nodeDirectives, ' '),
+      block(allFields),
+    ],
+    ' '
+  )
+
+  return typeDef
+}
+
+const printInputObjectTypeDefintion = (
+  type: GraphQLInputObjectType
+): string => {
+  const name = type.name
+  const node = type.astNode
+  const nodeDirectives = node?.directives?.map((n) => print(n))
+  const nodeFields = node?.fields
+
+  const extNodes = type?.extensionASTNodes
+  const extNodesFields = extNodes?.map((n) => n.fields)
+
+  const allFields = [
+    nodeFields ? nodeFields.map((n) => print(n)) : [],
+    extNodesFields
+      ? extNodesFields.map((ns) => (ns ? ns.map((n) => print(n)) : []))
+      : [],
+  ].flat(2)
+
+  const typeDef = join(
+    [
+      'input',
+      name,
+      // wrap('implements ', join(interfaces, ' & ')), // FaunaDB does not use Interfaces
+      join(nodeDirectives, ' '),
+      block(allFields),
+    ],
+    ' '
+  )
+
+  return typeDef
+}
+
+const printScalarTypeDefintion = (type: GraphQLScalarType): string =>
+  `scalar ${type.name}`
+
+const printEnumDefintion = (type: GraphQLEnumType): string => {
+  const name = type.name
+  const node = type.astNode
+  const nodeDirectives = node?.directives?.map((n) => print(n))
+  const nodeValues = node?.values
+  const nodeValuesPrinted = nodeValues ? nodeValues.map((n) => print(n)) : []
+
+  const typeDef = join(
+    ['enum', name, join(nodeDirectives, ' '), block(nodeValuesPrinted)],
+    ' '
+  )
+
+  return typeDef
+}
+
 export const printSchemaWithDirectives = (schema: GraphQLSchema): string => {
   const str = Object.keys(schema.getTypeMap())
     .filter((k) => !k.match(/^__/))
@@ -37,32 +123,14 @@ export const printSchemaWithDirectives = (schema: GraphQLSchema): string => {
 
       if (!type?.astNode || isSpecifiedScalarType(type)) return accum
 
-      const node = type.astNode as ObjectTypeDefinitionNode
-      const nodeDirectives = node.directives?.map((n) => print(n))
-      const nodeFields = node.fields
+      let typeDef
 
-      const extNodes = type?.extensionASTNodes as ObjectTypeExtensionNode[]
-      const extNodesFields = extNodes?.map((n) => n.fields)
+      if (isObjectType(type)) typeDef = printObjectTypeDefintion(type)
+      if (isInputObjectType(type)) typeDef = printInputObjectTypeDefintion(type)
+      if (isScalarType(type)) typeDef = printScalarTypeDefintion(type)
+      if (isEnumType(type)) typeDef = printEnumDefintion(type)
 
-      const allFields = [
-        nodeFields ? nodeFields.map((n) => print(n)) : [],
-        extNodesFields
-          ? extNodesFields.map((ns) => (ns ? ns.map((n) => print(n)) : []))
-          : [],
-      ].flat(2)
-
-      const typeDef = join(
-        [
-          'type',
-          name,
-          // wrap('implements ', join(interfaces, ' & ')), // FaunaDB does not use Interfaces
-          join(nodeDirectives, ' '),
-          block(allFields),
-        ],
-        ' '
-      )
-
-      return (accum += `${typeDef}\n`)
+      return typeDef ? accum + `${typeDef}\n` : accum
     }, '')
 
   return str
