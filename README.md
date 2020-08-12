@@ -67,27 +67,9 @@ Takes a list of SDL schema strings and combines them. This allows for using `ext
 
 See [extended types example](/examples/extended-types/setup.js)
 
-## `getTypeDefsFromFiles`
-
-```typescript
-getTypeDefsFromFiles = (paths: string[]) => string[]
-```
-
-Takes a list of relative file paths (**from current working directory**) and synchronously reads them.
-
-**Parameters**
-
-- `paths` Array of relative file paths.
-
-**Returns** An array of strings containing contents of the files indicated. Hopefully SDL schemas!
-
-See [files example](/examples/from-files/setup.js)
-
 # Using and Contributing
 
-This package is quite small, and a bit opinionated on how to read in SDL files. Rather than add this as a project dependancy, I would actually recommend (at this point) just copying the source or the basics of it to your own code.
-
-However, any feedback is appreciated, and if folks see ways to make this into a useful and viable package, I will work to make it so! Please fill out a Github Issue if you see anything.
+Any feedback is appreciated, and if folks see ways to make this into a useful and viable package, I will work to make it so! Please fill out a Github Issue if you see anything.
 
 Thanks!
 

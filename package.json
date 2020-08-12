@@ -1,6 +1,6 @@
 {
   "name": "faunadb-graphql-schema-loader",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Package to simplify uploading GraphQL Schema to FaunaDB",
   "keywords": [
     "faunadb",
@@ -11,6 +11,10 @@
   "files": [
     "build/**/*"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ptpaterson/faunadb-graphql-schema-loader.git"
+  },
   "scripts": {
     "build": "tsc",
     "buildw": "tsc -w",

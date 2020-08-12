@@ -1,6 +1,4 @@
-import * as fs from 'fs'
 import got from 'got'
-import * as path from 'path'
 import { makeExecutableSchema } from '@graphql-tools/schema'
 
 import { printSchemaWithDirectives } from './printer'
@@ -18,9 +16,6 @@ const extendFaunaSchema = (typeDefs: string[]): string[] => [
   ...faunaDirectives,
   ...typeDefs,
 ]
-
-export const getTypeDefsFromFiles = (paths: string[]): string[] =>
-  paths.map((p) => fs.readFileSync(path.join(process.cwd(), p), 'utf-8'))
 
 export const makeSchema = (typeDefs: string[]): string => {
   const extendedTypeDefs = extendFaunaSchema(typeDefs)

@@ -1,7 +1,8 @@
+const fs = require('fs')
 const path = require('path')
 require('dotenv').config({ path: path.join(__dirname, '../../.env.example') })
 const {
-  getTypeDefsFromFiles,
+  // getTypeDefsFromFiles,
   importSchema,
   makeSchema,
 } = require('../../build/index')
@@ -9,9 +10,7 @@ const {
 const secret = process.env.FAUNADB_ADMIN_KEY
 
 const filePaths = ['./main.gql', './budget.gql']
-
-// make sure you current working directory is this one!
-const typeDefs = getTypeDefsFromFiles(filePaths)
+const typeDefs = filePaths.map(f => fs.readFileSync(path.join(__dirname, f), 'utf-8'))
 
 const schema = makeSchema(typeDefs)
 

@@ -2,5 +2,7 @@
   "arrowParens": "always",
   "endOfLine": "auto",
   "semi": false,
-  "singleQuote": true
+  "singleQuote": true,
+  "printWidth": 80,
+  "tabWidth": 2
 }

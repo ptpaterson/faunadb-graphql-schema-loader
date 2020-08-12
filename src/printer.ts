@@ -12,11 +12,11 @@ import {
   GraphQLEnumType,
 } from 'graphql'
 
-/* ***************************************************************************************
+/* *****************************************************************************
  * Utility functions based on graphql-js
  *
  * https://github.com/graphql/graphql-js/blob/master/src/language/printer.js
- * ***************************************************************************************
+ * *****************************************************************************
  */
 
 const join = (maybeArray: string[] | undefined, separator = ''): string =>
@@ -33,7 +33,7 @@ const block = (array: string[]): string =>
 //   return maybeString ? start + maybeString + end : ''
 // }
 
-/* **************************************************************************************/
+/* ****************************************************************************/
 
 const printObjectTypeDefintion = (type: GraphQLObjectType): string => {
   const name = type.name
