@@ -18,7 +18,30 @@ const extendFaunaSchema = (typeDefs: string[]): string[] => [
 ]
 
 export const makeSchema = (typeDefs: string[]): string => {
-  const extendedTypeDefs = extendFaunaSchema(typeDefs)
+  const autoExtendedTypedefs = typeDefs.reduce(
+    (result, value) => {
+      const hasQueryType =
+        value.indexOf('type Query') >= 0 &&
+        value.indexOf('extend type Query') === -1
+      const newQueryDefined = result.queryDefined || hasQueryType
+      const newTypeDef =
+        result.queryDefined && hasQueryType
+          ? value.replace('type Query', 'extend type Query')
+          : value
+
+      return {
+        typedefs: [...result.typedefs, newTypeDef],
+        queryDefined: newQueryDefined,
+      }
+    },
+    {
+      typedefs: [] as string[],
+      queryDefined: false,
+    }
+  ).typedefs
+
+  // const extendedTypeDefs = extendFaunaSchema(typeDefs)
+  const extendedTypeDefs = extendFaunaSchema(autoExtendedTypedefs)
   const executableSchema = makeExecutableSchema({ typeDefs: extendedTypeDefs })
   const schema = printSchemaWithDirectives(executableSchema)
   return schema

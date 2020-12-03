@@ -86,6 +86,30 @@ const interfaceSchemaResult = `type User {
 }
 `
 
+const autoExtendQueryTypedefs = [
+  `type Query {
+    one: String
+  }`,
+  `type Query {
+    two: String
+  }`,
+]
+
+const autoExtendQueryTypedefs2 = [
+  `type Query {
+    one: String
+  }`,
+  `extend type Query {
+    two: String
+  }`,
+]
+
+const autoExtendQuerySchema = `type Query {
+  one: String
+  two: String
+}
+`
+
 describe('makeSchema', () => {
   it('works with a single typeDef', () => {
     expect(makeSchema([basicSchema])).toEqual(basicSchema)
@@ -109,5 +133,10 @@ describe('makeSchema', () => {
 
   it('does not print interfaces', () => {
     expect(makeSchema([interfaceSchema])).toEqual(interfaceSchemaResult)
+  })
+
+  it('works with multiple Query types without requiring extend', () => {
+    expect(makeSchema(autoExtendQueryTypedefs)).toEqual(autoExtendQuerySchema)
+    expect(makeSchema(autoExtendQueryTypedefs2)).toEqual(autoExtendQuerySchema)
   })
 })

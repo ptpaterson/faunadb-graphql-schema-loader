@@ -67,6 +67,8 @@ Takes a list of SDL schema strings and combines them. This allows for using `ext
 
 See [extended types example](/examples/extended-types/setup.js)
 
+> NOTE:  Since `0.2.0`, the `extend` keyword is not necessary for the `Query` type when used in multiple schemas.  Normally, multiple types would cause an error.  However, `makeSchema` will automatically add `extend` if multiple instances of `type Query` are found.  This is useful for creating reusable schema chunks without having to worry about which schema uses `type Query` while all others are `extend type Query`.
+
 # Using and Contributing
 
 Any feedback is appreciated, and if folks see ways to make this into a useful and viable package, I will work to make it so! Please fill out a Github Issue if you see anything.

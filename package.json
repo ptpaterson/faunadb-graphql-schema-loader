@@ -1,6 +1,6 @@
 {
   "name": "faunadb-graphql-schema-loader",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Package to simplify uploading GraphQL Schema to FaunaDB",
   "keywords": [
     "faunadb",
