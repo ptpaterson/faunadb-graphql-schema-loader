@@ -53,8 +53,7 @@ export const importSchema = async (
   mode: 'replace' | 'merge' | 'override' = 'replace',
 ): Promise<string> => {
   try {
-    let params = ''
-    if (mode === 'override') params = '?mode=override'
+    let params = `?mode=${mode}`
 
     const response = await got.post(
       `https://graphql.fauna.com/import${params}`,
