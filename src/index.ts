@@ -50,14 +50,14 @@ export const makeSchema = (typeDefs: string[]): string => {
 export const importSchema = async (
   faunadbKey: string,
   schema: string,
-  mode: 'merge' | 'override' = 'merge'
+  mode: 'replace' | 'merge' | 'override' = 'replace',
+  endpoint: string = 'https://graphql.fauna.com'
 ): Promise<string> => {
   try {
-    let params = ''
-    if (mode === 'override') params = '?mode=override'
+    let params = `?mode=${mode}`
 
     const response = await got.post(
-      `https://graphql.fauna.com/import${params}`,
+      `${endpoint}/import${params}`,
       {
         body: schema,
         headers: {
