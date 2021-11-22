@@ -35,7 +35,8 @@ importSchema(secret, schema).then((res) => console.log(res))
 importSchema = (
   faunadbKey: string,
   schema: string,
-  mode: 'merge' | 'override' = 'merge'
+  mode: 'replace' | 'merge' | 'override' = 'replace',
+  endpoint: string = 'https://graphql.fauna.com'
 ) => Promise<string>
 ```
 
