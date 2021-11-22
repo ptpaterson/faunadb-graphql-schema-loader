@@ -51,12 +51,13 @@ export const importSchema = async (
   faunadbKey: string,
   schema: string,
   mode: 'replace' | 'merge' | 'override' = 'replace',
+  endpoint: string = 'https://graphql.fauna.com'
 ): Promise<string> => {
   try {
     let params = `?mode=${mode}`
 
     const response = await got.post(
-      `https://graphql.fauna.com/import${params}`,
+      `${endpoint}/import${params}`,
       {
         body: schema,
         headers: {
