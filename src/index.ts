@@ -50,7 +50,7 @@ export const makeSchema = (typeDefs: string[]): string => {
 export const importSchema = async (
   faunadbKey: string,
   schema: string,
-  mode: 'merge' | 'override' = 'merge'
+  mode: 'replace' | 'merge' | 'override' = 'replace',
 ): Promise<string> => {
   try {
     let params = ''
