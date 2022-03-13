@@ -10,6 +10,7 @@ import {
   GraphQLScalarType,
   GraphQLInputObjectType,
   GraphQLEnumType,
+  GraphQLNamedType,
 } from 'graphql'
 
 /* *****************************************************************************
@@ -115,13 +116,16 @@ const printEnumDefintion = (type: GraphQLEnumType): string => {
   return typeDef
 }
 
+const isFaunaScalarType = (type: GraphQLNamedType): boolean => {
+  return (type.name == "Time" || type.name == "Long" || type.name == "Date")
+}
+
 export const printSchemaWithDirectives = (schema: GraphQLSchema): string => {
   const str = Object.keys(schema.getTypeMap())
     .filter((k) => !k.match(/^__/))
     .reduce((accum, name) => {
       const type = schema.getType(name)
-
-      if (!type?.astNode || isSpecifiedScalarType(type)) return accum
+      if (!type?.astNode || isSpecifiedScalarType(type) || isFaunaScalarType(type)) return accum
 
       let typeDef
 

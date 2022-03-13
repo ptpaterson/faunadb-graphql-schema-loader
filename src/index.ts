@@ -10,6 +10,9 @@ const faunaDirectives = [
   `directive @resolver(name: String, paginated: Boolean! = false) on FIELD_DEFINITION`,
   `directive @relation(name: String) on FIELD_DEFINITION`,
   `directive @unique(index: String) on FIELD_DEFINITION`,
+  `scalar Time`,
+  `scalar Long`,
+  `scalar Date`
 ]
 
 const extendFaunaSchema = (typeDefs: string[]): string[] => [
