@@ -71,7 +71,10 @@ export const importSchema = async (
     }
 
     return response.body
-  } catch (error) {
-    return error.response.body
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return error.message
+    }
+    return JSON.stringify(error)
   }
 }
