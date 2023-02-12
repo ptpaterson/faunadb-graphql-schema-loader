@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "@graphql-tools/schema": "^9.0.1",
-    "got": "^11.8.3",
+    "got": "^12.5.3",
     "graphql": "^16.6.0"
   }
 }
